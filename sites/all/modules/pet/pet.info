@@ -3,4 +3,3 @@ description = A module about a pet.
 package = My First Modules
 core = 7.x
 files[] = pet.module
-stylesheets[all][] = petStyles.css

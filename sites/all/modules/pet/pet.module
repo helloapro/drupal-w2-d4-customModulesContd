@@ -13,6 +13,7 @@ function pet_menu() {
 
 function mr_kitty() {
     return '
+            <link rel="stylesheet" href="./sites/all/modules/pet/petStyles.css" type="text/css">
             <a target="_blank" href="https://en.wikipedia.org/wiki/Bicolor_cat"><img class="kitty" src="./sites/all/img/kitty.jpg" /></a>
             <p>This is mr kitty. he is a cat.</p>
     ';

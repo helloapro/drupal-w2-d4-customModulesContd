@@ -1,0 +1,5 @@
+name = Hello_User
+description = A module that confirms when a new user is created.
+package = My First Modules
+core = 7.x
+files[] = hello_user.module

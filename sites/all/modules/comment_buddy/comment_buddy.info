@@ -1,0 +1,5 @@
+name = Comment_Buddy
+description = Display comment buddies.
+package = My First Modules
+core = 7.x
+files[] = comment_buddy.module
