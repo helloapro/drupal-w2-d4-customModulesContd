@@ -1,0 +1,19 @@
+<?php
+
+function pet_menu() {
+    $items = array();
+    $items['matts_pet'] = array(
+            'title' => "matt's pet",
+            'page callback' => 'mr_kitty',
+            'access callback' => TRUE,
+            'type' => MENU_NORMAL_ITEM,
+    );
+    return $items;
+}
+
+function mr_kitty() {
+    return '
+            <a target="_blank" href="https://en.wikipedia.org/wiki/Bicolor_cat"><img class="kitty" src="./sites/all/img/kitty.jpg" /></a>
+            <p>This is mr kitty. he is a cat.</p>
+    ';
+}

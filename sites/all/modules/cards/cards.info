@@ -1,0 +1,5 @@
+name = Cards
+description = Display cards to different friends.
+package = My First Modules
+core = 7.x
+files[] = cards.module

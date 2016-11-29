@@ -1,0 +1,27 @@
+<?php
+function cards_menu() {
+    $friends = array('George', 'Paul', 'John');
+    $items = array();
+    foreach ($friends as $friend) {
+        $items[$friend] = array(
+                'title' => 'Hello ' . $friend,
+                'page callback' => 'friend_card',
+                'access callback' => TRUE,
+                'type' => MENU_NORMAL_ITEM,
+        );
+    }
+    return $items;
+}
+
+    function friend_card() {
+        $friends = array('George', 'Paul', 'John');
+        $path = current_path();
+        foreach ($friends as $friend) {
+            if ($path == $friend) {
+                return '
+                        <p>Hello ' . $friend . '</p>
+                        <p>Thanks for all the tunes!</p>
+                ';
+            }
+        }
+    }
