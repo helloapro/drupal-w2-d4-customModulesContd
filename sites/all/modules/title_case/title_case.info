@@ -1,0 +1,5 @@
+name = Title Case
+description = Form that takes a title and converts it to Title Case
+package = My First Modules
+core = 7.x
+files[] = title_case.module

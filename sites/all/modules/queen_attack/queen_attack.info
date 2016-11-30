@@ -1,0 +1,5 @@
+name = Queen Attack
+description = An module that determines if a chess piece is within striking distance of a Queen.
+package = My First Modules
+core = 7.x
+files[] = queen_attack.module

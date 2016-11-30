@@ -1,0 +1,5 @@
+name = Ping Pong
+description = Replaces numbers with "Ping", "Pong", or "PingPong" depending on given parameters.
+package = My First Modules
+core = 7.x
+files[] = ping_pong.module

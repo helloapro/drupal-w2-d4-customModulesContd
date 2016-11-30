@@ -1,0 +1,50 @@
+<?php
+function title_case_menu() {
+    $items = array();
+    $items['title_case'] = array(
+            'title' => 'Title Case',
+            'type' => MENU_NORMAL_ITEM,
+            'access callback' => TRUE,
+            'page callback' => 'drupal_get_form',
+            'page arguments' => array('title_case_form'),
+        );
+    $items['title_case_success_page'] = array(
+            'title' => 'Your Title',
+            'type' => MENU_CALLBACK,
+            'access callback' => TRUE,
+            'page callback' => 'display_converted_title',
+        );
+    return $items;
+}
+
+function title_case_form() {
+    $form = array();
+    $form['title'] = array(
+            '#title' => 'Title to Convert:',
+            '#type' => 'textfield',
+            '#description' => 'Enter a title to have title case applied',
+        );
+    $form['submit'] = array(
+            '#type' => 'submit',
+            '#value' => 'Show Title Case',
+        );
+    return $form;
+}
+
+function title_case_form_submit($form, &$form_state) {
+    $title = $form_state['values']['title'];
+    $words = explode(" ", $title);
+    $converted_words = array();
+    foreach($words as $word) {
+        $converted_words[] = ucfirst($word);
+    }
+    $converted_title = implode(' ', $converted_words);
+    $_SESSION['converted_title'] = $converted_title;
+    $form_state['redirect'] = 'title_case_success_page';
+}
+
+function display_converted_title() {
+    // displays title case
+    $title = $_SESSION['converted_title'];
+    return "<p>" . $title . "</p>";
+}

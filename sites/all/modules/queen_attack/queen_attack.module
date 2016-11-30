@@ -1,0 +1,26 @@
+<?php
+function queen_attack_menu() {
+    $items = array();
+    $items['queen_attack'] = array(
+            'title' => 'Queen Attack',
+            'type' => MENU_NORMAL_ITEM,
+            'access callback' => TRUE,
+            'page callback' => 'drupal_get_form',
+            'page arguments' => array('queen_attack_form'),
+        );
+    return $items;
+}
+
+function queen_attack_form() {
+    $form = array();
+    $form['attack'] = array(
+            '#title' => 'Queen Attack',
+            '#type' => 'textfield',
+            '#description' => t('Place the Queen on a space on the board.'),
+        );
+    $form['submit'] = array(
+            '#type' => 'submit',
+            '#value' => 'Attack!!!',
+        );
+    return $form;
+}
