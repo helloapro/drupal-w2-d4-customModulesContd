@@ -8,15 +8,62 @@ function queen_attack_menu() {
             'page callback' => 'drupal_get_form',
             'page arguments' => array('queen_attack_form'),
         );
+    $items['queen_attack_success_page'] = array(
+            'title' => 'Queen Attack Results',
+            'type' => MENU_CALLBACK,
+            'access callback' => TRUE,
+            'page callback' => 'display_attack_results',
+        );
     return $items;
+}
+
+function queen_attack_form_submit($form, &$form_state) {
+    $queenX = $form_state['values']['queenX'];
+    $queenY = $form_state['values']['queenY'];
+    $pawnX = $form_state['values']['pawnX'];
+    $pawnY = $form_state['values']['pawnY'];
+    if (
+        ($queenX == $pawnX) ||
+        ($queenY == $pawnY) ||
+        abs($queenX - $pawnX) == abs($queenY - $pawnY)
+    ) {
+        $_SESSION['attack_results'] = TRUE;
+    } else {
+        $_SESSION['attack_results'] = FALSE;
+    }
+    $form_state['redirect'] = 'queen_attack_success_page';
+}
+
+function display_attack_results() {
+    $results = $_SESSION['attack_results'];
+    if ($results) {
+        return "Yep";
+    } else {
+        return "Nope";
+    }
 }
 
 function queen_attack_form() {
     $form = array();
-    $form['attack'] = array(
-            '#title' => 'Queen Attack',
+    $form['queenX'] = array(
+            '#title' => 'Queen X',
             '#type' => 'textfield',
-            '#description' => t('Place the Queen on a space on the board.'),
+            '#description' => t('Enter a X coordinate for the Queen between 1 and 8.'),
+        );
+    $form['queenY'] = array(
+            '#title' => 'Queen Y',
+            '#type' => 'textfield',
+            '#description' => t('Enter a Y coordinate for the Queen between 1 and 8.'),
+        );
+    $form['pawnX'] = array(
+            '#title' => 'Pawn X',
+            '#type' => 'textfield',
+            '#description' => t('Enter a X coordinate for the Pawn between 1 and 8.'),
+        );
+    $form['pawnY'] = array(
+            '#title' => 'Pawn Y',
+            '#type' => 'textfield',
+            '#description' => t('Enter a Y coordinate for the Pawn between 1 and 8.'),
         );
     $form['submit'] = array(
             '#type' => 'submit',
