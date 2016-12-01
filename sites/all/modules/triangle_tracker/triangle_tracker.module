@@ -1,0 +1,92 @@
+<?php
+function triangle_tracker_menu() {
+    $items = array();
+    $items['triangle_tracker'] = array(
+            'title' => 'Triangle Tracker',
+            'type' => MENU_NORMAL_ITEM,
+            'access callback' => TRUE,
+            'page callback' => 'drupal_get_form',
+            'page arguments' => array('triangle_tracker_form'),
+        );
+        $items['triangle_tracker_success_page'] = array(
+                'title' => 'Queen Attack Results',
+                'type' => MENU_CALLBACK,
+                'access callback' => TRUE,
+                'page callback' => 'display_triangle_results',
+            );
+        return $items;
+    }
+
+function triangle_tracker_form_submit($form, &$form_state) {
+    $side1 = $form_state['values']['side1'];
+    $side2 = $form_state['values']['side2'];
+    $side3 = $form_state['values']['side3'];
+
+    if (
+    ($side1 !== $side2) &&
+    ($side3 !== $side2) &&
+    ($side1 !== $side3)
+    ) {
+        $_SESSION['triangle_results'] = "Your inputs produced a Scalene triangle!";
+    } elseif (
+    ($side1 == $side2) &&
+    ($side3 == $side2) &&
+    ($side1 == $side3)
+    ) {
+        $_SESSION['triangle_results'] = "Your inputs produced an Equilateral triangle!";
+    } else {
+        $_SESSION['triangle_results'] = "Your inputs produced an Isosceles triangle!";
+    }
+
+    $form_state['redirect'] = 'triangle_tracker_success_page';
+}
+
+function triangle_tracker_form_validate($form, &$form_state) {
+    $side1 = $form_state['values']['side1'];
+    $side2 = $form_state['values']['side2'];
+    $side3 = $form_state['values']['side3'];
+
+    if (
+    ($side1 + $side2 < $side3) ||
+    ($side3 + $side2 < $side1) ||
+    ($side1 + $side3 < $side2)
+    ) {
+        form_error($form, t('Two sides cannot sum to a length greater than the third! That would be an inproper 📐 !'));
+    }
+}
+
+function display_triangle_results() {
+    $results = $_SESSION['triangle_results'];
+
+    return $results;
+}
+
+function triangle_tracker_form() {
+    $form = array();
+    $form['side1'] = array(
+            '#title' => 'Side 1',
+            '#type' => 'textfield',
+            '#description' => t('Enter a length for side 1'),
+            '#required' => TRUE,
+            '#element_validate' => array('element_validate_integer_positive'),
+        );
+    $form['side2'] = array(
+            '#title' => 'Side 2',
+            '#type' => 'textfield',
+            '#description' => t('Enter a length for side 2'),
+            '#required' => TRUE,
+            '#element_validate' => array('element_validate_integer_positive'),
+        );
+    $form['side3'] = array(
+            '#title' => 'Side 3',
+            '#type' => 'textfield',
+            '#description' => t('Enter a length for side 3'),
+            '#required' => TRUE,
+            '#element_validate' => array('element_validate_integer_positive'),
+        );
+    $form['submit'] = array(
+            '#type' => 'submit',
+            '#value' => 'Go',
+        );
+    return $form;
+}

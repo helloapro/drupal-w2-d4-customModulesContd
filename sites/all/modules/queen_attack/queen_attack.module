@@ -23,11 +23,6 @@ function queen_attack_form_submit($form, &$form_state) {
     $pawnX = $form_state['values']['pawnX'];
     $pawnY = $form_state['values']['pawnY'];
     if (
-    ($queenX == $pawnX) &&
-    ($queenY == $pawnY)
-    ) {
-        form_error($form, t('Two pieces cannot be on the same square!'));
-    } elseif (
         ($queenX == $pawnX) ||
         ($queenY == $pawnY) ||
         abs($queenX - $pawnX) == abs($queenY - $pawnY)
@@ -37,6 +32,19 @@ function queen_attack_form_submit($form, &$form_state) {
         $_SESSION['attack_results'] = FALSE;
     }
     $form_state['redirect'] = 'queen_attack_success_page';
+}
+
+function queen_attack_form_validate($form, &$form_state) {
+    $queenX = $form_state['values']['queenX'];
+    $queenY = $form_state['values']['queenY'];
+    $pawnX = $form_state['values']['pawnX'];
+    $pawnY = $form_state['values']['pawnY'];
+    if (
+    ($queenX == $pawnX) &&
+    ($queenY == $pawnY)
+    ) {
+        form_error($form, t('Two pieces cannot be on the same square!'));
+    }
 }
 
 function display_attack_results() {

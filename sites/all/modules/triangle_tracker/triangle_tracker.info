@@ -1,0 +1,5 @@
+name = Triangle Tracker
+description = A module that can determine if three inputted lengths can be a triangle.
+package = My First Modules
+core = 7.x
+files[] = triangle_tracker.module
