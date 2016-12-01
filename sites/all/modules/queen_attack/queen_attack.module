@@ -23,6 +23,11 @@ function queen_attack_form_submit($form, &$form_state) {
     $pawnX = $form_state['values']['pawnX'];
     $pawnY = $form_state['values']['pawnY'];
     if (
+    ($queenX == $pawnX) &&
+    ($queenY == $pawnY)
+    ) {
+        form_error($form, t('Two pieces cannot be on the same square!'));
+    } elseif (
         ($queenX == $pawnX) ||
         ($queenY == $pawnY) ||
         abs($queenX - $pawnX) == abs($queenY - $pawnY)
@@ -49,25 +54,39 @@ function queen_attack_form() {
             '#title' => 'Queen X',
             '#type' => 'textfield',
             '#description' => t('Enter a X coordinate for the Queen between 1 and 8.'),
+            '#required' => TRUE,
+            '#element_validate' => array('element_validate_integer_positive', 'element_validate_board'),
         );
     $form['queenY'] = array(
             '#title' => 'Queen Y',
             '#type' => 'textfield',
             '#description' => t('Enter a Y coordinate for the Queen between 1 and 8.'),
+            '#required' => TRUE,
+            '#element_validate' => array('element_validate_integer_positive', 'element_validate_board'),
         );
     $form['pawnX'] = array(
             '#title' => 'Pawn X',
             '#type' => 'textfield',
             '#description' => t('Enter a X coordinate for the Pawn between 1 and 8.'),
+            '#required' => TRUE,
+            '#element_validate' => array('element_validate_integer_positive', 'element_validate_board'),
         );
     $form['pawnY'] = array(
             '#title' => 'Pawn Y',
             '#type' => 'textfield',
             '#description' => t('Enter a Y coordinate for the Pawn between 1 and 8.'),
+            '#required' => TRUE,
+            '#element_validate' => array('element_validate_integer_positive', 'element_validate_board'),
         );
     $form['submit'] = array(
             '#type' => 'submit',
             '#value' => 'Attack!!!',
         );
     return $form;
+}
+
+function element_validate_board($element) {
+    if ($element['#value'] > 8 || $element['#value'] < 1) {
+        form_error($element, t('Number must be between 1 and 8.'));
+    }
 }

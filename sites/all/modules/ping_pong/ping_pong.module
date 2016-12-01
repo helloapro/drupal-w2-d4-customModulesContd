@@ -22,6 +22,8 @@ function ping_pong_form() {
         '#title' => 'Ping Pong changes numbers divisible by 3 into Ping, numbers divisible by 5 into Pong, and numbers divisible by both into PingPong!',
         '#type' => 'textfield',
         '#description' => t('Please enter a number you want to count up to'),
+        '#element_validate' => array('element_validate_integer_positive'),
+        '#required' => TRUE,
     );
     $form['submit'] = array(
         '#type' => 'submit',
